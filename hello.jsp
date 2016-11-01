@@ -18,6 +18,18 @@ application.
 </table>
 
 <%= new String("Hello!") %>
+<%=
+
+File f = new File("/images/");
+
+File[] list = f.listFiles();
+
+for(int i = 0 ; i < list.length ; i++){
+  File jpg = list[i]; 
+  // use this file object to create img tag's in your jsp
+}
+
+%>
 
 </body>
 </html>
