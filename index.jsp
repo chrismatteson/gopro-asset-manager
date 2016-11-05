@@ -21,7 +21,7 @@ File f=new File("/opt/tomcat/webapps/gam/images");
     <tr>
     <td width="87%"><%=fname%></td>
     
-    <td width="14%"><img border="0" src="images/<%= f2[i].getName() %>" width="150" height="100" ></td>
+    <td width="14%"><a href="video.jsp?video=<%= f2[i].getName().substring(0, f2[i].getName().length()-4) %>"><img border="0" src="images/<%= f2[i].getName() %>" width="150" height="100" ></a></td>
   </tr>
     <%
      }
