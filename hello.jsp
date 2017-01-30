@@ -1,3 +1,20 @@
+<%@ page import="java.io.*"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="com.amazonaws.services.s3.*"%>
+<%@ page import="com.amazonaws.client.*"%>
+<%@ page import="com.amazonaws.internal.*"%>
+<%@ page import="com.amazonaws.services.s3.AmazonS3"%>
+<%@ page import="com.amazonaws.services.s3.AmazonS3Builder"%>
+<%@ page import="com.amazonaws.services.s3.model.S3ObjectSummary"%>
+<%@ page import="com.amazonaws.AmazonClientException"%>
+<%@ page import="com.amazonaws.AmazonServiceException"%>
+<%@ page import="com.amazonaws.auth.profile.ProfileCredentialsProvider"%>
+<%@ page import="com.amazonaws.services.s3.AmazonS3Client"%>
+<%@ page import="com.amazonaws.services.s3.model.ListObjectsRequest"%>
+<%@ page import="com.amazonaws.services.s3.model.ListObjectsV2Request"%>
+<%@ page import="com.amazonaws.services.s3.model.ListObjectsV2Result"%>
+<%@ page import="com.amazonaws.services.s3.model.ObjectListing"%>
 <html>
 <head>
 <title>Sample Application JSP Page</title>
@@ -18,18 +35,17 @@ application.
 </table>
 
 <%= new String("Hello!") %>
-<%
-
-  File f = new File("/images/");
-
-  File[] list = f.listFiles();
-
-  for(int i = 0 ; i < list.length ; i++){
-    File jpg = list[i]; 
-    // use this file object to create img tag's in your jsp
-  }
+<%!
+  String bucketName = "gam-thumbnails";
+  AmazonS3 s3client = new AmazonS3Client(new ProfileCredentialsProvider());
+  final ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName).withMaxKeys(2);
+  ListObjectsV2Result result;
+ObjectListing listing = s3client.listObjects( bucketName );
+List<S3ObjectSummary> summaries = listing.getObjectSummaries();
 
 %>
+<%= bucketName %>
+<%= summaries %>
 
 </body>
 </html>
